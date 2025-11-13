@@ -545,46 +545,48 @@ function buildBlock(blockName, content) {
  * Loads JS and CSS for a block.
  * @param {Element} block The block element
  */
-async function loadBlock(block) {
+ async function loadBlock(block) {
   const status = block.dataset.blockStatus;
   if (status !== 'loading' && status !== 'loaded') {
     block.dataset.blockStatus = 'loading';
+
     const { blockName } = block.dataset;
+
     try {
-      if (blockName === 'aashirvaad-product-detail') {
-        const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/aaashirvaad/${blockName}/${blockName}.css`);
-      } else {
-        const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`);
-      }
+      // Load CSS
+      const cssPath = (blockName === 'aashirvaad-product-detail')
+        ? `${window.hlx.codeBasePath}/blocks/aaashirvaad/${blockName}/${blockName}.css`
+        : `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`;
+
+      const cssLoaded = loadCSS(cssPath);
+
+      // Load JS + decorate
       const decorationComplete = new Promise((resolve) => {
         (async () => {
           try {
-            if(blockName === 'aashirvaad-product-detail'){
-            const mod = await import(
-              `${window.hlx.codeBasePath}/blocks/aaashirvaad/${blockName}/${blockName}.js`
-            );
-            } else {
-              const mod = await import(
-                `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.js`
-              );
-            }
-            if (mod.default) {
-              await mod.default(block);
-            }
+            const jsPath = (blockName === 'aashirvaad-product-detail')
+              ? `${window.hlx.codeBasePath}/blocks/aaashirvaad/${blockName}/${blockName}.js`
+              : `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.js`;
+
+            const mod = await import(jsPath);
+            if (mod.default) await mod.default(block);
+
           } catch (error) {
-            // eslint-disable-next-line no-console
             console.error(`failed to load module for ${blockName}`, error);
           }
           resolve();
         })();
       });
+
       await Promise.all([cssLoaded, decorationComplete]);
+
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(`failed to load block ${blockName}`, error);
+      console.error(`failed to load block ${block.dataset.blockName}`, error);
     }
+
     block.dataset.blockStatus = 'loaded';
   }
+
   return block;
 }
 
