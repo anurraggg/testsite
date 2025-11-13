@@ -559,9 +559,15 @@ async function loadBlock(block) {
       const decorationComplete = new Promise((resolve) => {
         (async () => {
           try {
+            if(blockName === 'aashirvaad-product-detail'){
             const mod = await import(
-              `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.js`
+              `${window.hlx.codeBasePath}/blocks//aaashirvaad/${blockName}/${blockName}.js`
             );
+            } else {
+              const mod = await import(
+                `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.js`
+              );
+            }
             if (mod.default) {
               await mod.default(block);
             }
