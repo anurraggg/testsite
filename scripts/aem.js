@@ -554,7 +554,7 @@ function buildBlock(blockName, content) {
 
     try {
       // Load CSS
-      const cssPath = (blockName === 'aashirvaad-product-detail' && !theme)
+      const cssPath = (blockName === 'aashirvaad-product-detail' && theme)
         ? `${window.hlx.codeBasePath}/blocks/${theme}/${blockName}/${blockName}.css`
         : `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`;
 
