@@ -546,16 +546,16 @@ function buildBlock(blockName, content) {
  * @param {Element} block The block element
  */
  async function loadBlock(block) {
+  const theme = getMetadata('theme');
   const status = block.dataset.blockStatus;
   if (status !== 'loading' && status !== 'loaded') {
     block.dataset.blockStatus = 'loading';
-
     const { blockName } = block.dataset;
 
     try {
       // Load CSS
-      const cssPath = (blockName === 'aashirvaad-product-detail')
-        ? `${window.hlx.codeBasePath}/blocks/aaashirvaad/${blockName}/${blockName}.css`
+      const cssPath = (blockName === 'aashirvaad-product-detail' && !theme)
+        ? `${window.hlx.codeBasePath}/blocks/${theme}/${blockName}/${blockName}.css`
         : `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`;
 
       const cssLoaded = loadCSS(cssPath);
@@ -565,7 +565,7 @@ function buildBlock(blockName, content) {
         (async () => {
           try {
             const jsPath = (blockName === 'aashirvaad-product-detail')
-              ? `${window.hlx.codeBasePath}/blocks/aaashirvaad/${blockName}/${blockName}.js`
+              ? `${window.hlx.codeBasePath}/blocks/${theme}/${blockName}/${blockName}.js`
               : `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.js`;
 
             const mod = await import(jsPath);
