@@ -551,7 +551,11 @@ async function loadBlock(block) {
     block.dataset.blockStatus = 'loading';
     const { blockName } = block.dataset;
     try {
-      const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`);
+      if (blockName === 'aashirvaad-product-detail') {
+        const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/aaashirvaad/${blockName}/${blockName}.css`);
+      } else {
+        const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`);
+      }
       const decorationComplete = new Promise((resolve) => {
         (async () => {
           try {
