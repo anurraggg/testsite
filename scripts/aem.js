@@ -554,7 +554,7 @@ function buildBlock(blockName, content) {
 
     try {
       // Load CSS
-      const cssPath = (blockName === 'aashirvaad-product-detail' && theme)
+      const cssPath = (theme)
         ? `${window.hlx.codeBasePath}/blocks/${theme}/${blockName}/${blockName}.css`
         : `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`;
 
@@ -564,7 +564,7 @@ function buildBlock(blockName, content) {
       const decorationComplete = new Promise((resolve) => {
         (async () => {
           try {
-            const jsPath = (blockName === 'aashirvaad-product-detail')
+            const jsPath = (theme)
               ? `${window.hlx.codeBasePath}/blocks/${theme}/${blockName}/${blockName}.js`
               : `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.js`;
 
