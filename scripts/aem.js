@@ -561,7 +561,7 @@ async function loadBlock(block) {
           try {
             if(blockName === 'aashirvaad-product-detail'){
             const mod = await import(
-              `${window.hlx.codeBasePath}/blocks//aaashirvaad/${blockName}/${blockName}.js`
+              `${window.hlx.codeBasePath}/blocks/aaashirvaad/${blockName}/${blockName}.js`
             );
             } else {
               const mod = await import(
